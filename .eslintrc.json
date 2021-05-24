@@ -1,0 +1,48 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended" 
+    ],
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "babelOptions": {
+            "configFile": "./.babelrc"
+        }
+    },
+    "plugins": [
+        "react"
+    ],
+    "settings": {
+        "react": {
+            "version": "detect" 
+        }
+    },
+    "rules": {
+		"indent": ["error", "tab", {"SwitchCase": 1}],
+		"comma-dangle": ["error", "never"],
+		"arrow-parens": ["warn", "as-needed", { "requireForBlockBody": true }],
+		"no-console": "warn",
+		"no-unused-vars": ["error", {
+			"vars": "local",
+			"args": "none"
+		}],
+		"no-multiple-empty-lines": ["error", {"max": 2}],
+        "react/prop-types": ["warn", { "skipUndeclared": true }],
+		"react/jsx-filename-extension": "off",
+		"react/no-unescaped-entities": "off",
+        // "react/display-name": "off",                        // To support HOC's with redux-react
+		"linebreak-style": "off",
+		"semi": "off",
+		"no-tabs": "off"
+	}
+}
