@@ -1,5 +1,8 @@
 # Specific to this repo
 working.txt
+# Ignore locally built files (eg. by webpack)
+public/bundle.*
+public/styles.*
 
 # Logs
 logs
