@@ -12,14 +12,15 @@ module.exports = (env, argv) => {
 		entry: './src/app.js',
 		// entry: './src/playground/higher-order-component.js',
 		output: {
-			path: path.join(__dirname, 'public'),			// Needs absolute path; this also works: path.resolve('./public')
+			path: path.join(__dirname, 'public', 'dist'),			// Needs absolute path; this also works: path.resolve('./public/dist')
 			filename: 'bundle.js'
 		},
 		// For options see: https://webpack.js.org/configuration/devtool/
 		// devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',		// use 'eval-source-map' if needing exact lines - but slower. 'source-map' only for production
 		devtool: isProduction ? 'source-map' : 'inline-cheap-module-source-map',		// 'inline-source-map' works for CSS, but slower. 'inline-cheap-module-source-map' is faster
 		devServer: {
-			contentBase: path.join(__dirname, 'public'),		// The bundle.js file is served from memory, doesn't exist on disk
+			publicPath: '/dist/',								// Actual webpack generated files will go in here, under public/
+			contentBase: path.join(__dirname, 'public'),		// Non-webpack generated files come from here
 			historyApiFallback: true							// Tells Dev Server to always serve index.html for all URLs (we'll use client side routing)
 		},
 		module: {
