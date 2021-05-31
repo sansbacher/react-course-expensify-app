@@ -3,8 +3,6 @@ import {connect} from 'react-redux'
 import ExpenseListItem from './ExpenseListItem'
 import selectExpenses from '../selectors/expenses'
 
-// REMOVED: <h1>Expense List</h1>
-
 // Regular unconnected Component, once connected it will receive the mapped State to Props
 // ONLY exported for the purposes of TESTING with Jest (NOT used directly by the app, the default Connected export below is)
 export const ExpenseList = props => (
