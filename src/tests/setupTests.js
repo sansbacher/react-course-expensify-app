@@ -3,5 +3,8 @@
 
 import Enzyme from 'enzyme'
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17'				// Unofficial React v17 Enzyme Adapter
+import DotEnv from 'dotenv'
+
+DotEnv.config({ path: '.env.test' })									// Read in the .env.test file and add all the environment variables
 
 Enzyme.configure({ adapter: new Adapter() })

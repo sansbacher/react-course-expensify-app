@@ -10,6 +10,9 @@ import './styles/styles.scss'
 import 'react-dates/initialize';					// We're not using react-with-styles so need this, as per: https://github.com/airbnb/react-dates#initialize
 import 'react-dates/lib/css/_datepicker.css'
 
+import './firebase/firebase'
+
+
 const store = configureStore()
 
 const jsx = (

@@ -5,19 +5,23 @@ import selectExpenses from '../selectors/expenses'
 import selectExpenseTotal from '../selectors/expenses-total'
 
 // Named export for testing purposes with Jest
-export const ExpensesSummary = (props) => {
+export const ExpensesSummary = ({expensesCount, expensesTotal}) => {
+	const expenseWord = expensesCount === 1 ? 'expense' : 'expenses'
+	const formattedTotal = numeral(expensesTotal / 100).format('$0,0.00')
+
 	return (
-		<p>
-			Viewing {props.expensesCount} {props.expensesCount === 1 ? 'expense' : 'expenses'} totalling {numeral(props.expensesTotal / 100).format('$0,0.00')}
-		</p>
+		<div>
+			<h1>Viewing {expensesCount} {expenseWord} totalling {formattedTotal}</h1>
+		</div>
 	)
 }
 
 const mapStateToProps = (state) => {
-	const expenses = selectExpenses(state.expenses, state.filters)
+	const visibleExpenses = selectExpenses(state.expenses, state.filters)
+	
 	return {
-		expensesCount: expenses.length,
-		expensesTotal: selectExpenseTotal(expenses)
+		expensesCount: visibleExpenses.length,
+		expensesTotal: selectExpenseTotal(visibleExpenses)
 	};
 }
 

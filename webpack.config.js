@@ -1,5 +1,14 @@
 const path = require('path')
+const webpack = require('webpack')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')			// Replaces extract-text-webpack-plugin for CSS (only) and webpack > 4
+
+process.env.NODE_ENV = process.env.NODE_ENV || 'development'			// Heroku will set NODE_ENV = 'production' when we're running there. Using cross-env to set it in package.json when testing/dev.
+
+if (process.env.NODE_ENV === 'test') {
+	require('dotenv').config({ path: '.env.test' })						// Read in the .env.test file and add all the environment variables
+} else if (process.env.NODE_ENV === 'development') {
+	require('dotenv').config({ path: '.env.development' })				// ENV Variables are 'passed' (replaced) below, at compile time by webpack
+}
 
 // Now export a function that returns the config object - so we can vary settings based on Prod vs Dev
 module.exports = (env, argv) => {
@@ -56,6 +65,16 @@ module.exports = (env, argv) => {
 		plugins: [
 			new MiniCssExtractPlugin({ 												// Set the name of the separate .CSS file MiniCssExtractPlugin will use
 				filename: 'styles.css'
+			}),
+			new webpack.DefinePlugin({				// Pass variables to client-side JS - basically does a find/replace.
+				'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),				// Need to use JSON.stringify() to ensure we get the '"quoted value"' of the variable
+				'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
+				'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
+				'process.env.FIREBASE_PROJECT_ID': JSON.stringify(process.env.FIREBASE_PROJECT_ID),
+				'process.env.FIREBASE_STORAGE_BUCKET': JSON.stringify(process.env.FIREBASE_STORAGE_BUCKET),
+				'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
+				'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID),
+				'process.env.FIREBASE_MEASUREMENT_ID': JSON.stringify(process.env.FIREBASE_MEASUREMENT_ID)
 			})
 		]
 	};
