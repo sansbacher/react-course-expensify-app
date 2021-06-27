@@ -50,3 +50,31 @@ export const editExpense = (id, updates) => ({
 	updates
 })
 
+
+export const setExpenses = expenses => ({
+	type: 'SET_EXPENSES',
+	expenses				// Expects an array
+})
+
+// Helper function
+const snapshotToArray = (snapshot) => {
+	const expenses = []
+	snapshot.forEach((childSnapshot) => {
+		expenses.push({
+			id: childSnapshot.key,				// Returns the key pointed to (which is the childSnapShot, the random string)
+			...childSnapshot.val()				// Add all the other values
+		})
+	})
+	return expenses;
+}
+
+export const startSetExpenses = () => {
+	return (dispatch) => {						// Redux-Thunk will call this function with dispatch
+		// We'll return the Promise that database.ref() returns
+		return database.ref('expenses').once('value')		// Get the data ONCE, as it is now - succeeds or fails, no notification if data changes
+			.then((snapshot) => {
+				const expenses = snapshotToArray(snapshot)
+				dispatch(setExpenses(expenses));
+			})
+	}
+}

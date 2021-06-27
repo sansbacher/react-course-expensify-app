@@ -1,30 +1,37 @@
 // Jest provides test() as a global. BUT can use this to help VSCode out:
-import {expect, test} from '@jest/globals'				// With React/Browser
+import {expect, test, beforeEach} from '@jest/globals'				// With React/Browser
 
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import {startAddExpense, addExpense, editExpense, removeExpense} from '../../actions/expenses'
+import {startAddExpense, addExpense, editExpense, removeExpense, setExpenses, startSetExpenses} from '../../actions/expenses'
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase'
 
-const fakeId = '123abc'
-
 const createMockStore = configureMockStore([thunk])
+
+// Import the fixtures data before each test runs
+beforeEach((done) => {
+	const expensesData = {}
+	expenses.forEach(({id, description, note, amount, createdAt}) => {
+		expensesData[id] = {description, note, amount, createdAt}			// Results in an object of several id1: {desc, note, etc}, id2: {etc}
+	})
+	database.ref('expenses').set(expensesData).then(() => done())
+})
 
 test('should setup remove expense action object', () => {
 	const action = removeExpense({id: '123abc'})
 	expect(action).toEqual({						// use .toEqual() with objects/arrays
 		type: 'REMOVE_EXPENSE',
-		id: fakeId
+		id: '123abc'
 	})
 })
 
 test('should setup edit expense action object for note', () => {
 	const noteValue = 'New note value'
-	const action = editExpense(fakeId, {note: noteValue})
+	const action = editExpense('123abc', {note: noteValue})
 	expect(action).toEqual({
 		type: 'EDIT_EXPENSE',
-		id: fakeId,
+		id: '123abc',
 		updates: {note: noteValue}
 	})
 })
@@ -91,18 +98,22 @@ test('should add expense with defaults to database and store', (done) => {
 		})
 })
 
-/**
-	test('should setup add expense action object with default values', () => {
-		const action = addExpense()
-		expect(action).toEqual({
-			type: 'ADD_EXPENSE',
-			expense: {
-				description: '',
-				amount: 0,
-				createdAt: 0,
-				note: '',
-				id: expect.any(String)
-			}
-		})
+test('should setup set expense action object with data', () => {
+	const action = setExpenses(expenses)
+	expect(action).toEqual({
+		type: 'SET_EXPENSES',
+		expenses
 	})
-*/
+})
+
+test('should fetch the expenses from firebase', (done) => {
+	const store = createMockStore({})
+	store.dispatch(startSetExpenses()).then(() => {
+		const actions = store.getActions()
+		expect(actions[0]).toEqual({
+			type: 'SET_EXPENSES',
+			expenses
+		})
+		done()
+	})
+})

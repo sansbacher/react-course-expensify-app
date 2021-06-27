@@ -8,7 +8,7 @@ export default (state = expensesReducerDefaultState, action) => {			// For this 
 			// return state.concat(action.expense);			// state.push() would change the state. concat() returns a new array.
 			return [...state, action.expense];				// Or we can use spread operator, returning a new array with the existing state + new item
 		case 'REMOVE_EXPENSE': 
-			return state.filter(expense => expense.id !== action.id)
+			return state.filter(expense => expense.id !== action.id);
 		case 'EDIT_EXPENSE':
 			return state.map((expense) => {
 				if (expense.id === action.id) {
@@ -19,7 +19,9 @@ export default (state = expensesReducerDefaultState, action) => {			// For this 
 				} else {
 					return expense;
 				}
-			})
+			});
+		case 'SET_EXPENSES':
+			return action.expenses;							// Replaces any existing expenses entirely
 		default:
 			return state;
 	}
