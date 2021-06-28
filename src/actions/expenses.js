@@ -16,7 +16,7 @@ import database from '../firebase/firebase'
 
 export const addExpense = expense => ({				// Simplified addExpense Action Generator
 	type: 'ADD_EXPENSE',
-	expense
+	expense					// An expense Object
 })
 
 export const startAddExpense = (expenseData = {}) => {			// Returns a Function (which requires redux-thunk to process)
@@ -49,7 +49,7 @@ export const startRemoveExpense = ({id} = {}) => {			// expects an Object like {
 		if (id) {				// Avoids accidentally removing all 'expenses/' if ID is null/empty
 			return database.ref(`expenses/${id}`).remove().then(() => {
 				dispatch(removeExpense({id}))
-			})
+			});
 		}
 	};
 }
@@ -57,9 +57,17 @@ export const startRemoveExpense = ({id} = {}) => {			// expects an Object like {
 export const editExpense = (id, updates) => ({
 	type: 'EDIT_EXPENSE',
 	id,
-	updates
+	updates					// Object of any updated properties (amount, note, etc)
 })
 
+export const startEditExpense = (id, updates) => {
+	return (dispatch) => {
+		// .update() multiple properties at once (does not replace all data), must pass in an Object
+		return database.ref(`expenses/${id}`).update(updates).then(() => {
+			dispatch(editExpense(id, updates))
+		});
+	};
+}
 
 export const setExpenses = expenses => ({
 	type: 'SET_EXPENSES',

@@ -10,7 +10,8 @@ import {
 	setExpenses,
 	startAddExpense,
 	startSetExpenses,
-	startRemoveExpense
+	startRemoveExpense,
+	startEditExpense
 } from '../../actions/expenses'
 import expenses from '../fixtures/expenses'
 import database from '../../firebase/firebase'
@@ -34,7 +35,7 @@ test('should setup remove expense action object', () => {
 	})
 })
 
-test('should remove expenses from firebase', (done) => {
+test('should remove expense from firebase', (done) => {
 	const store = createMockStore({expenses})					// Preload fixtures as expenses
 	const id = expenses[1].id
 	store.dispatch(startRemoveExpense({id})).then(() => {
@@ -50,7 +51,6 @@ test('should remove expenses from firebase', (done) => {
 	})
 })
 
-
 test('should setup edit expense action object for note', () => {
 	const noteValue = 'New note value'
 	const action = editExpense('123abc', {note: noteValue})
@@ -58,6 +58,29 @@ test('should setup edit expense action object for note', () => {
 		type: 'EDIT_EXPENSE',
 		id: '123abc',
 		updates: {note: noteValue}
+	})
+})
+
+test('should edit expense from firebase', (done) => {
+	const store = createMockStore({})
+	const id = expenses[1].id
+	const updates = {
+		amount: 211100,
+		note: 'Moved into a bigger apartment'
+	}
+	store.dispatch(startEditExpense(id, updates)).then(() => {
+		const actions = store.getActions()
+		expect(actions[0]).toEqual({
+			type: 'EDIT_EXPENSE',
+			id,
+			updates
+		})
+		return database.ref(`expenses/${id}`).once('value');
+	}).then((snapshot) => {
+		const data = snapshot.val()
+		expect(data.amount).toBe(updates.amount)
+		expect(data.note).toBe(updates.note)
+		done()
 	})
 })
 

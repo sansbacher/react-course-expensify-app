@@ -7,17 +7,17 @@ import {EditExpensePage} from '../../components/EditExpensePage'
 import expenses from '../fixtures/expenses'
 
 // Reuse these before running each Test
-let editExpense, startRemoveExpense, history, expense, wrapper;
+let startEditExpense, startRemoveExpense, history, expense, wrapper;
 beforeEach(() => {
 	expense = expenses[2]					// The expense we'll test with
-	editExpense = jest.fn()					// Fake functions for our Component
+	startEditExpense = jest.fn()					// Fake functions for our Component
 	startRemoveExpense = jest.fn()
 	history = { push: jest.fn() }			// We need to be able to call history.push()
 	// Manually add the props needed by this Component
 	wrapper = shallow(
 		<EditExpensePage
 			expense={expense}
-			editExpense={editExpense}
+			startEditExpense={startEditExpense}
 			startRemoveExpense={startRemoveExpense}
 			history={history} 
 		/>
@@ -28,9 +28,9 @@ test('should render EditExpensePage correctly', () => {
 	expect(wrapper).toMatchSnapshot()
 })
 
-test('should handle editExpense', () => {
-	wrapper.find('ExpenseForm').prop('onSubmit')(expense)						// Call the function returned from the prop (as need to pass an arg)
-	expect(editExpense).toHaveBeenLastCalledWith(expense.id, expense)			// Only testing that the function is called correctly, not that it works (that would be under tests/reducers )
+test('should handle startEditExpense', () => {
+	wrapper.find('ExpenseForm').prop('onSubmit')(expense)							// Call the function returned from the prop (as need to pass an arg)
+	expect(startEditExpense).toHaveBeenLastCalledWith(expense.id, expense)			// Only testing that the function is called correctly, not that it works (that would be under tests/reducers )
 	expect(history.push).toHaveBeenLastCalledWith('/')
 })
 

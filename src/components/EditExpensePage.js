@@ -1,14 +1,15 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import ExpenseForm from './ExpenseForm'
-import {editExpense, startRemoveExpense} from '../actions/expenses'
+import {startEditExpense, startRemoveExpense} from '../actions/expenses'
 
 // Named export just for testing
 export class EditExpensePage extends React.Component {
 	// Callbacks to handle what ExpenseForm or this form needs to do
 	onSubmit = (expense) => {
 		// OLD WAY (when it was a stateless functional component...): props.dispatch(editExpense(props.expense.id, expense))
-		this.props.editExpense(this.props.expense.id, expense)			// Must use this.props.blah instead a class-based Component (not just props.blah)
+		// OLD before Firebase: this.props.editExpense(this.props.expense.id, expense)			// Must use this.props.blah instead a class-based Component (not just props.blah)
+		this.props.startEditExpense(this.props.expense.id, expense)			// Must use this.props.blah instead a class-based Component (not just props.blah)
 		this.props.history.push('/')
 	}
 	onRemove = () => {
@@ -41,7 +42,7 @@ const mapStateToProps = (state, props) => {
 // Encapsulate the call to dispatch() within a prop so we can more easily test this Component (could pass in: (dispatch, props) if needed)
 const mapDispatchToProps = (dispatch) => {
 	return {
-		editExpense: (id, expense) => dispatch(editExpense(id, expense)),		// Add these Props
+		startEditExpense: (id, expense) => dispatch(startEditExpense(id, expense)),		// Add these Props
 		// startRemoveExpense: ({id}) => dispatch(startRemoveExpense({id}))		// Destructure and restructure...
 		startRemoveExpense: data => dispatch(startRemoveExpense(data))			// ... or just pass along the object passed in
 	}
