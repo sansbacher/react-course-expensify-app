@@ -7,13 +7,21 @@ import {EditExpensePage} from '../../components/EditExpensePage'
 import expenses from '../fixtures/expenses'
 
 // Reuse these before running each Test
-let editExpense, removeExpense, history, expense, wrapper;
+let editExpense, startRemoveExpense, history, expense, wrapper;
 beforeEach(() => {
 	expense = expenses[2]					// The expense we'll test with
 	editExpense = jest.fn()					// Fake functions for our Component
-	removeExpense = jest.fn()
+	startRemoveExpense = jest.fn()
 	history = { push: jest.fn() }			// We need to be able to call history.push()
-	wrapper = shallow(<EditExpensePage expense={expense} editExpense={editExpense} removeExpense={removeExpense} history={history} />)		// Manually add the props needed by this Component
+	// Manually add the props needed by this Component
+	wrapper = shallow(
+		<EditExpensePage
+			expense={expense}
+			editExpense={editExpense}
+			startRemoveExpense={startRemoveExpense}
+			history={history} 
+		/>
+	)
 })
 
 test('should render EditExpensePage correctly', () => {
@@ -26,8 +34,8 @@ test('should handle editExpense', () => {
 	expect(history.push).toHaveBeenLastCalledWith('/')
 })
 
-test('should handle removeExpense', () => {
+test('should handle startRemoveExpense', () => {
 	wrapper.find('button').simulate('click')							// Could do: .prop('onClick')()
-	expect(removeExpense).toHaveBeenLastCalledWith({id: expense.id})
+	expect(startRemoveExpense).toHaveBeenLastCalledWith({id: expense.id})
 	expect(history.push).toHaveBeenLastCalledWith('/')
 })

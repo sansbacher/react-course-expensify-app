@@ -36,13 +36,23 @@ export const startAddExpense = (expenseData = {}) => {			// Returns a Function (
 				...expense				// All the other items from expense
 			}))
 		});
-	}
+	};
 }
 
 export const removeExpense = ({id} = {}) => ({
 	type: 'REMOVE_EXPENSE',
 	id
 })
+
+export const startRemoveExpense = ({id} = {}) => {			// expects an Object like {id: 'some-id'}
+	return (dispatch) => {
+		if (id) {				// Avoids accidentally removing all 'expenses/' if ID is null/empty
+			return database.ref(`expenses/${id}`).remove().then(() => {
+				dispatch(removeExpense({id}))
+			})
+		}
+	};
+}
 
 export const editExpense = (id, updates) => ({
 	type: 'EDIT_EXPENSE',
@@ -76,5 +86,5 @@ export const startSetExpenses = () => {
 				const expenses = snapshotToArray(snapshot)
 				dispatch(setExpenses(expenses));
 			})
-	}
+	};
 }
