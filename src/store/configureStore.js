@@ -1,7 +1,8 @@
 import {createStore, combineReducers, applyMiddleware, compose} from 'redux'
+import thunk from 'redux-thunk'
 import expensesReducer from '../reducers/expenses'
 import filtersReducer from '../reducers/filters'
-import thunk from 'redux-thunk'
+import authReducer from '../reducers/auth'
 
 // Uses the Redux Dev Tools' compose, or the standard Redux compose
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
@@ -11,7 +12,8 @@ export default () => {			// Default export is a function that returns the store
 	const store = createStore(
 		combineReducers({				// Pass in an object of key: reducerFunction. All Reducers will receive all Actions.
 			expenses: expensesReducer,
-			filters: filtersReducer
+			filters: filtersReducer,
+			auth: authReducer
 		}),
 
 		// applyMiddleware(thunk)		// Normal way to add middleware (as 2nd arg to createStore), BUT can't then use the Redux Dev Tools:

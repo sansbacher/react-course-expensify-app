@@ -1,5 +1,5 @@
 // Jest provides test() as a global. BUT can use this to help VSCode out:
-import {expect, test, beforeEach} from '@jest/globals'				// With React/Browser
+import {expect, test, beforeEach, afterAll} from '@jest/globals'				// With React/Browser
 
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
@@ -25,6 +25,10 @@ beforeEach((done) => {
 		expensesData[id] = {description, note, amount, createdAt}			// Results in an object of several id1: {desc, note, etc}, id2: {etc}
 	})
 	database.ref('expenses').set(expensesData).then(() => done())
+})
+
+afterAll(() => {
+	database.goOffline()
 })
 
 test('should setup remove expense action object', () => {

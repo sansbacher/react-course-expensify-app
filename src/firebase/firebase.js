@@ -28,7 +28,11 @@ firebase.initializeApp(firebaseConfig)
 // https://firebase.google.com/docs/reference/js/firebase.database
 const database = firebase.database()
 
-export {firebase, database as default};
+// https://firebase.google.com/docs/reference/js/auth.googleauthprovider?authuser=0
+const googleAuthProvider = new firebase.auth.GoogleAuthProvider()						// Mainly used in actions\auth.js
+// googleAuthProvider.setCustomParameters({ prompt: 'select_account'})						// Causes the Google pop-up login prompt to always appear to select an account
+
+export {firebase, googleAuthProvider, database as default};
 
 /**	EXAMPLES:
 	// https://firebase.google.com/docs/reference/js/firebase.database.Database#ref
