@@ -1,3 +1,5 @@
+// Must be in a folder called: __mocks__
+
 import {jest} from '@jest/globals'				// To keep VSCode/ESLint happy, but jest is an automatic global for all test.js files
 const moment = jest.requireActual('moment')		// The _actual/real_ moment() module
 
