@@ -10,7 +10,7 @@ import 'firebase/database'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {										// Values from .env.test or .env.development (via webpack), or Heroku for Production
+const firebaseConfig = {						// Values from .env.test or .env.development (via webpack - MUST specify in there!), or Heroku for Production
 	apiKey: process.env.FIREBASE_API_KEY,
 	authDomain: process.env.FIREBASE_AUTH_DOMAIN,
 	databaseURL: process.env.FIREBASE_DATABASE_URL,
@@ -30,7 +30,9 @@ const database = firebase.database()
 
 // https://firebase.google.com/docs/reference/js/auth.googleauthprovider?authuser=0
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider()						// Mainly used in actions\auth.js
-// googleAuthProvider.setCustomParameters({ prompt: 'select_account'})						// Causes the Google pop-up login prompt to always appear to select an account
+if (process.env.IS_HEROKU === 'true') {													// When running on Heroku. Comes from a new ENV var, which is in the .ENV.* files + Webpack, or added to Heroku. Could have used NODE_ENV as well.
+	googleAuthProvider.setCustomParameters({ prompt: 'select_account'})					// Causes the Google pop-up login prompt to always appear to select an account
+}
 
 export {firebase, googleAuthProvider, database as default};
 
