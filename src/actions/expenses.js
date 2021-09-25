@@ -20,8 +20,9 @@ export const addExpense = expense => ({				// Simplified addExpense Action Gener
 })
 
 export const startAddExpense = (expenseData = {}) => {			// Returns a Function (which requires redux-thunk to process)
-	return (dispatch) => {		// Redux-Thunk will call this function with dispatch
-		const {					// Destructure, providing defaults as needed
+	return (dispatch, getState) => {		// Redux-Thunk will call this function with dispatch and getState functions
+		const uid = getState().auth.uid		// Gives us access to the state
+		const {								// Destructure, providing defaults as needed
 			description = '',
 			note = '',
 			amount = 0,
@@ -30,7 +31,7 @@ export const startAddExpense = (expenseData = {}) => {			// Returns a Function (
 		const expense = {description, note, amount, createdAt}		// Construct new Object (includes the defaults)
 
 		// Pushes the data into Firebase DB - which is async - then dispatch the normal addExpense Action. Returns a promise, which can be chained upon.
-		return database.ref('expenses').push(expense).then((ref) => {
+		return database.ref(`users/${uid}/expenses`).push(expense).then((ref) => {
 			dispatch(addExpense({
 				id: ref.key,			// ID is no longer a uuid v4, but is now the unique 'key' from Firebase
 				...expense				// All the other items from expense
@@ -45,9 +46,10 @@ export const removeExpense = ({id} = {}) => ({
 })
 
 export const startRemoveExpense = ({id} = {}) => {			// expects an Object like {id: 'some-id'}
-	return (dispatch) => {
+	return (dispatch, getState) => {
 		if (id) {				// Avoids accidentally removing all 'expenses/' if ID is null/empty
-			return database.ref(`expenses/${id}`).remove().then(() => {
+			const uid = getState().auth.uid
+			return database.ref(`users/${uid}/expenses/${id}`).remove().then(() => {
 				dispatch(removeExpense({id}))
 			});
 		}
@@ -61,9 +63,10 @@ export const editExpense = (id, updates) => ({
 })
 
 export const startEditExpense = (id, updates) => {
-	return (dispatch) => {
+	return (dispatch, getState) => {
+		const uid = getState().auth.uid
 		// .update() multiple properties at once (does not replace all data), must pass in an Object
-		return database.ref(`expenses/${id}`).update(updates).then(() => {
+		return database.ref(`users/${uid}/expenses/${id}`).update(updates).then(() => {
 			dispatch(editExpense(id, updates))
 		});
 	};
@@ -74,7 +77,7 @@ export const setExpenses = expenses => ({
 	expenses				// Expects an array
 })
 
-// Helper function
+// MY helper function
 const snapshotToArray = (snapshot) => {
 	const expenses = []
 	snapshot.forEach((childSnapshot) => {
@@ -87,9 +90,10 @@ const snapshotToArray = (snapshot) => {
 }
 
 export const startSetExpenses = () => {
-	return (dispatch) => {						// Redux-Thunk will call this function with dispatch
+	return (dispatch, getState) => {						// Redux-Thunk will call this function with dispatch + getState functions
+		const uid = getState().auth.uid
 		// We'll return the Promise that database.ref() returns
-		return database.ref('expenses').once('value')		// Get the data ONCE, as it is now - succeeds or fails, no notification if data changes
+		return database.ref(`users/${uid}/expenses`).once('value')		// Get the data ONCE, as it is now - succeeds or fails, no notification if data changes
 			.then((snapshot) => {
 				const expenses = snapshotToArray(snapshot)
 				dispatch(setExpenses(expenses));

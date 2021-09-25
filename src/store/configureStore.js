@@ -9,6 +9,7 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 export default () => {			// Default export is a function that returns the store
 
+	// This will be our "state", and Object like { expenses: {}, filters: {}, auth: {} }
 	const store = createStore(
 		combineReducers({				// Pass in an object of key: reducerFunction. All Reducers will receive all Actions.
 			expenses: expensesReducer,
