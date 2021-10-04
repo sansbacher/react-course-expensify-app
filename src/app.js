@@ -1,3 +1,6 @@
+// polyfill only stable `core-js` features - ES and web standards. Needed (along with a Webpack change to target ES5) to enable IE11 support
+// import 'core-js/stable'									// Allows supporting IE11 and ES5 browsers - which are only 1-2% of browsers in 2021
+
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {Provider} from 'react-redux'
@@ -5,6 +8,7 @@ import AppRouter, {history} from './routers/AppRouter'			// history is the custo
 import configureStore from './store/configureStore'
 import { startSetExpenses } from './actions/expenses'
 import {login, logout} from './actions/auth'
+import LoadingPage from './components/LoadingPage'
 
 import 'normalize.css/normalize.css'
 import './styles/styles.scss'
@@ -31,7 +35,7 @@ const renderApp = () => {
 	}
 }
 
-ReactDOM.render(<p>Loading...</p>, document.getElementById('app'))
+ReactDOM.render(<LoadingPage />, document.getElementById('app'))
 
 firebase.auth().onAuthStateChanged((user) => {
 	if (user) {

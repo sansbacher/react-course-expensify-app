@@ -1,0 +1,22 @@
+.input-group {
+	// For smaller screens (though these styles are still in effect on larger screens)
+	display: flex;
+	flex-direction: column;
+	margin-bottom: $m-size;
+
+	@media (min-width: $desktop-breakpoint) {			// For larger screens (only)
+		flex-direction: row;
+		margin-bottom: $l-size;							// Overrides the smaller screen style
+	}
+}
+
+.input-group__item {
+	// For smaller screens
+	margin-bottom: $s-size;
+	
+	@media (min-width: $desktop-breakpoint) {			// For larger screens
+		margin-right: $s-size;
+		margin: 0 $s-size 0 0;
+	}
+
+}

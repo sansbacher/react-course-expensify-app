@@ -1,8 +1,13 @@
 @import './base/settings';
 @import './base/base';
-
-// For the AirBnB React-Date Picker
-// As per: https://github.com/airbnb/react-dates#initialize
-*, *:before, *:after {
-	box-sizing: border-box;
-}
+@import './components/content-container'; 	// Partial files must start with _, but the _ and .scss ext aren't used when @import-ing
+@import './components/box-layout';			
+@import './components/visibility';
+@import './components/button';
+@import './components/header';
+@import './components/page-header';
+@import './components/input-group';
+@import './components/inputs';
+@import './components/form';
+@import './components/list';
+@import './components/loader';

@@ -1,0 +1,11 @@
+.show-for-mobile {
+	@media (min-width: $desktop-breakpoint) {			// Hide if Desktop or larger
+		display: none;
+	}
+}
+
+.show-for-desktop {
+	@media (max-width: $desktop-breakpoint - 0.01rem) {		// Hide if less than Desktop (ie. Mobile)
+		display: none;
+	}
+}

@@ -1,0 +1,40 @@
+// Copy of the Firebase Auth rules, for reference.
+// https://console.firebase.google.com/project/expensify-4d470/database/expensify-4d470-default-rtdb/rules
+
+{
+  "rules": {
+    ".read": false,			// Default no access to the root
+    ".write": false,
+    "users" : {					// Define a users object
+      "$user_id": {			// Which has some user_id passed in ($dynamic value)
+        ".read": "$user_id === auth.uid",			// If it matches the logged in auth.uid
+        ".write": "$user_id === auth.uid",		// then allow read/write
+        "expenses": {		// Define an expenses object
+          "$expense_id": {			// Which has a dynamic expense_id
+            // Validate that the expense object has 4 properties
+            ".validate": "newData.hasChildren(['description', 'note', 'createdAt', 'amount'])",
+            // Validate each property; description needs to be not blank
+            "description": {
+              ".validate": "newData.isString() && newData.val().length > 0"
+            },
+            "note": {
+              ".validate": "newData.isString()"
+            },
+            "createdAt": {
+              ".validate": "newData.isNumber()"
+            },
+          	"amount": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {				// Dynamic catch-all for any other property: none are allowed in expenses
+          		".validate": false
+        		}
+          }       
+        },
+        "$other": {					// Nothing else allowed in users
+          ".validate": false
+        }
+      }
+    }
+  }
+}

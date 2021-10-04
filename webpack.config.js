@@ -20,9 +20,19 @@ module.exports = (env, argv) => {
 		},
 		entry: './src/app.js',
 		// entry: './src/playground/higher-order-component.js',
+		// target: ['web', 'es5'],									// This instructs Webpack 5 to target/allow IE11, with core-js installed (for polyfills) in app.js, it works
 		output: {
 			path: path.join(__dirname, 'public', 'dist'),			// Needs absolute path; this also works: path.resolve('./public/dist')
 			filename: 'bundle.js'
+			// ,environment: {										// INSTEAD of the target: [] section you can specify what to allow individually.
+			// 	arrowFunction: false,								// These allow the app to work in IE11
+			// 	bigIntLiteral: false,
+			// 	const: false,
+			// 	destructuring: false,
+			// 	dynamicImport: false,
+			// 	forOf: false,
+			// 	module: false
+			// }
 		},
 		// For options see: https://webpack.js.org/configuration/devtool/
 		// devtool: isProduction ? 'source-map' : 'eval-cheap-module-source-map',		// use 'eval-source-map' if needing exact lines - but slower. 'source-map' only for production
@@ -50,7 +60,8 @@ module.exports = (env, argv) => {
 					{
 						loader: 'css-loader',
 						options: {
-							sourceMap: true		// Tell each loader to create source maps
+							sourceMap: true,		// Tell each loader to create source maps
+							url: false				// For the url('/images/bg.jpg') Error: Can't resolve '/images/bg.jpg' in 'c:\....'
 						}
 					},
 					{
@@ -66,7 +77,7 @@ module.exports = (env, argv) => {
 			new MiniCssExtractPlugin({ 												// Set the name of the separate .CSS file MiniCssExtractPlugin will use
 				filename: 'styles.css'
 			}),
-			new webpack.DefinePlugin({				// Pass variables to client-side JS - basically does a find/replace.
+			new webpack.DefinePlugin({				// Pass variables to client-side JS - basically does a find/replace. MUST do this for any process.env.* we want to use
 				'process.env.FIREBASE_API_KEY': JSON.stringify(process.env.FIREBASE_API_KEY),				// Need to use JSON.stringify() to ensure we get the '"quoted value"' of the variable
 				'process.env.FIREBASE_AUTH_DOMAIN': JSON.stringify(process.env.FIREBASE_AUTH_DOMAIN),
 				'process.env.FIREBASE_DATABASE_URL': JSON.stringify(process.env.FIREBASE_DATABASE_URL),
@@ -75,7 +86,7 @@ module.exports = (env, argv) => {
 				'process.env.FIREBASE_MESSAGING_SENDER_ID': JSON.stringify(process.env.FIREBASE_MESSAGING_SENDER_ID),
 				'process.env.FIREBASE_APP_ID': JSON.stringify(process.env.FIREBASE_APP_ID),
 				'process.env.FIREBASE_MEASUREMENT_ID': JSON.stringify(process.env.FIREBASE_MEASUREMENT_ID),
-				'process.env.IS_HEROKU': JSON.stringify(process.env.IS_HEROKU)
+				'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)								// Added this one
 			})
 		]
 	};

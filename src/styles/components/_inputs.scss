@@ -1,0 +1,17 @@
+.text-input {
+	border: 1px solid #cacccd;
+	height: 50px;
+	padding: $s-size;
+	font-size: $font-size-large;
+	font-weight: 300;
+}
+
+.textarea {
+	@extend .text-input;				// Pull-in the styles from .text-input. Similar to doing: .text-input, .select { styles; }
+	height: 10rem;						// Can override as well
+}
+
+.select {
+	@extend .text-input;
+}
+

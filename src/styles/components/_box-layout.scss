@@ -1,0 +1,22 @@
+.box-layout {
+	background: url('/images/bg.jpg');				/* Assumes "public" as the "root" when client-side, needed a webpack tweak to work */
+	background-size: cover;
+	display: flex;
+	height: 100vh;									/* vh is view-port high, vw is view-port width*/
+	width: 100vw;
+	justify-content: center;
+	align-items: center;
+}
+
+.box-layout__box {
+	background: fade-out($color: white, $amount: .15);
+	border-radius: 3px;
+	text-align: center;
+	width: 28rem;
+	padding: $l-size $m-size;
+}
+
+.box-layout__title {
+	margin: 0 0 $m-size 0;
+	line-height: 1;
+}

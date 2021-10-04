@@ -1,0 +1,12 @@
+.form {
+	display: flex;
+	flex-direction: column;
+	> * {								// Selects all direct decedents of .form (ie. the INPUTs, but not the BUTTON - as it's in a DIV)
+		margin-bottom: $m-size;
+	}
+}
+
+.form__error {
+	margin: 0 0 $m-size 0;
+	font-style: italic;
+}

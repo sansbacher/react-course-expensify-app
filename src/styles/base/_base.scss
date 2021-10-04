@@ -1,3 +1,11 @@
+// We want this generally anyway, to make the final Computed Style match the size we set, not the size + padding + margin + border
+// ALSO _required_ for the current AirBnB React-Date Picker
+// 	Could also add * { box-sizing: border-box; } to the Date Picker specifically
+// 	As per: https://github.com/airbnb/react-dates#initialize
+* {
+	box-sizing: border-box;
+}
+
 html {
 	// Trick to make "rems" more base-10. If normal base font size = 16px, then 16 x 62.5% (0.625) = 10
 	font-size: 62.5%;
@@ -6,6 +14,8 @@ html {
 body {
 	font-size: $m-size;
 	font-family: Arial, Helvetica, sans-serif;
+	color: $dark-grey;
+	line-height: 1.6;
 }
 
 button {
