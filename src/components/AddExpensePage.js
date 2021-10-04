@@ -24,6 +24,7 @@ export class AddExpensePage extends React.Component {
 				<div className="content-container">
 					<ExpenseForm
 						onSubmit={this.onSubmit}
+						history={this.props.history}
 					/>
 				</div>
 			</div>

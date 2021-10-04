@@ -19,6 +19,11 @@ exports[`should render AddExpensePage correctly 1`] = `
     className="content-container"
   >
     <ExpenseForm
+      history={
+        Object {
+          "push": [MockFunction],
+        }
+      }
       onSubmit={[Function]}
     />
   </div>
