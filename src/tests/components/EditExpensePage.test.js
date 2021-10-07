@@ -10,10 +10,10 @@ import expenses from '../fixtures/expenses'
 let startEditExpense, startRemoveExpense, history, expense, wrapper;
 beforeEach(() => {
 	expense = expenses[2]					// The expense we'll test with
-	startEditExpense = jest.fn()					// Fake functions for our Component
+	startEditExpense = jest.fn()			// Fake functions for our Component
 	startRemoveExpense = jest.fn()
 	history = { push: jest.fn() }			// We need to be able to call history.push()
-	// Manually add the props needed by this Component
+	// Manually add the props needed by this Component. Can't directly test startRemoveExpense now that it's behind a confirmation modal (since it is called as a callback by the Modal)
 	wrapper = shallow(
 		<EditExpensePage
 			expense={expense}
@@ -22,6 +22,7 @@ beforeEach(() => {
 			history={history} 
 		/>
 	)
+	wrapper.setState({ showConfirmation: false })		// Fake State
 })
 
 test('should render EditExpensePage correctly', () => {
@@ -34,8 +35,16 @@ test('should handle startEditExpense', () => {
 	expect(history.push).toHaveBeenLastCalledWith('/')
 })
 
-test('should handle startRemoveExpense', () => {
+/*
+	// Before Remove Button had a modal in front of it...
+	test('should handle startRemoveExpense', () => {
+		wrapper.find('button').simulate('click')							// Could do: .prop('onClick')()
+		expect(startRemoveExpense).toHaveBeenLastCalledWith({id: expense.id})
+		expect(history.push).toHaveBeenLastCalledWith('/')
+	})
+*/
+
+test('should handle show Remove Confirmation Modal', () => {
 	wrapper.find('button').simulate('click')							// Could do: .prop('onClick')()
-	expect(startRemoveExpense).toHaveBeenLastCalledWith({id: expense.id})
-	expect(history.push).toHaveBeenLastCalledWith('/')
+	expect(wrapper.state().showConfirmation).toBe(true)					// Check our fake State
 })

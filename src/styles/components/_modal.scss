@@ -1,0 +1,51 @@
+// These classes were discovered by looking at the DOM when opening the Modal
+
+// the direct child div of ReactModalPortal
+.ReactModalPortal > div {
+	opacity: 0;
+}
+
+// Any ReactModal__Overlay child
+.ReactModalPortal .ReactModal__Overlay {
+	transition: opacity 150ms ease-in-out;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ReactModalPortal .ReactModal__Overlay--after-open {
+	opacity: 1;
+}
+
+// Close delay is set within JSX: closeTimeoutMS={200}
+.ReactModalPortal .ReactModal__Overlay--before-close {
+	opacity: 0;
+}
+
+.modal {
+	background: $off-white;
+	color: black;
+	max-width: 45rem;
+	outline: none;
+	padding: $l-size;
+	text-align: center;
+}
+
+.modal__title {
+	margin: 0 0 $m-size 0;			// top right bottom left
+}
+
+.modal__body {
+	margin: 0 0 $s-size 0;			// top right bottom left
+	font-size: $m-size;
+	font-weight: 300;
+	word-break: break-all;
+}
+
+.modal__body--message {
+	margin: 0 0 $l-size 0;			// top right bottom left
+	font-size: $font-size-small;
+	font-weight: 300;
+	word-break: break-all;
+
+}

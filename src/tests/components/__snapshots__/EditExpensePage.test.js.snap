@@ -42,5 +42,11 @@ exports[`should render EditExpensePage correctly 1`] = `
       Remove Expense
     </button>
   </div>
+  <ConfirmationModal
+    expenseDescription="credit card"
+    handleCancel={[Function]}
+    handleRemove={[Function]}
+    showConfirmation={false}
+  />
 </div>
 `;

@@ -8,6 +8,7 @@
 	font-size: $font-size-large;
 	text-decoration: none;
 	line-height: 1;
+	margin-right: $s-size;
 }
 
 .button--link {				// in BEM: -- means modifier, as in Block__Element--Modifier
