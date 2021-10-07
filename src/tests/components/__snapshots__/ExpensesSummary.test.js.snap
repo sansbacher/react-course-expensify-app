@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`should render ExpensesSummary with 1 expense 1`] = `
+exports[`should render ExpensesSummary with 1 expense, all 1`] = `
 <div
   className="page-header"
 >
@@ -35,7 +35,51 @@ exports[`should render ExpensesSummary with 1 expense 1`] = `
 </div>
 `;
 
-exports[`should render ExpensesSummary with multiple expenses 1`] = `
+exports[`should render ExpensesSummary with 1 expense, filtered 1`] = `
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      Viewing 
+      <span>
+        1
+      </span>
+       
+      expense
+       totalling 
+      <span>
+        $654.00
+      </span>
+    </h1>
+    <p
+      className="page-header__message"
+    >
+      With 
+      4
+       
+      expenses
+       not shown due to current filters
+    </p>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render ExpensesSummary with multiple expenses, all 1`] = `
 <div
   className="page-header"
 >
@@ -56,6 +100,50 @@ exports[`should render ExpensesSummary with multiple expenses 1`] = `
         $456.00
       </span>
     </h1>
+    <div
+      className="page-header__actions"
+    >
+      <Link
+        className="button"
+        to="/create"
+      >
+        Add Expense
+      </Link>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`should render ExpensesSummary with multiple expenses, filtered 1`] = `
+<div
+  className="page-header"
+>
+  <div
+    className="content-container"
+  >
+    <h1
+      className="page-header__title"
+    >
+      Viewing 
+      <span>
+        2
+      </span>
+       
+      expenses
+       totalling 
+      <span>
+        $789.00
+      </span>
+    </h1>
+    <p
+      className="page-header__message"
+    >
+      With 
+      1
+       
+      expense
+       not shown due to current filters
+    </p>
     <div
       className="page-header__actions"
     >
