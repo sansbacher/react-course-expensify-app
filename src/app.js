@@ -31,12 +31,13 @@ let hasRendered = false
 const renderApp = () => {
 	if (!hasRendered) {
 		ReactDOM.render(jsx, document.getElementById('app'))
-		hasRendered = true											// Only render once, even if user logs in/out. A hard refresh will cause page reload and will need to render again.
+		hasRendered = true											// Only render once, even if user logs in/out (since our SPA handles login, logout, and log back in). A hard refresh will cause page reload and will need to render again.
 	}
 }
 
 ReactDOM.render(<LoadingPage />, document.getElementById('app'))
 
+// This subscribes to Firebase Auth state changes and dispatches login()/logout() and redirects to the correct location, regardless of which provider was used.
 firebase.auth().onAuthStateChanged((user) => {
 	if (user) {
 		// Fetch the expenses if user has logged in

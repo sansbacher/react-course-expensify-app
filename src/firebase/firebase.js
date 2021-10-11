@@ -30,11 +30,13 @@ const database = firebase.database()
 
 // https://firebase.google.com/docs/reference/js/auth.googleauthprovider?authuser=0
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider()						// Mainly used in actions\auth.js
+const githubAuthProvider = new firebase.auth.GithubAuthProvider()
+
 if (process.env.NODE_ENV === 'production') {											// When running on Heroku. Semi "standard" ENV var from Heroku/package.json. Must be enabled via webpack.config.js
 	googleAuthProvider.setCustomParameters({ prompt: 'select_account'})					// Causes the Google pop-up login prompt to always appear to select an account
 }
 
-export {firebase, googleAuthProvider, database as default};
+export {firebase, googleAuthProvider, githubAuthProvider, database as default};
 
 /**	EXAMPLES:
 	// https://firebase.google.com/docs/reference/js/firebase.database.Database#ref

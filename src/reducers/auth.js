@@ -1,3 +1,5 @@
+// Reducers actually change the state of the Redux store, when an Action instructs Redux to do so
+
 export default (state = {}, action) => {				// Provide the default state for the reducer
 	switch (action.type) {
 		case 'LOGIN':

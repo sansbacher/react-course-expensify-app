@@ -5,6 +5,8 @@ import React from 'react'
 import { shallow } from 'enzyme'
 import ConfirmationModal from '../../components/ConfirmationModal'
 
+// jest.spyOn(ConfirmationModal, 'setAppElement').mockImplementation( param => console.log('setAppElement', param))
+
 test('should render ConfirmationModal correctly', () => {
 	const wrapper = shallow(
 		<ConfirmationModal

@@ -3,9 +3,7 @@ import Modal from 'react-modal'
 
 // Tell React-Modal what element (our root div) to hide when displaying the modal for assistive readers:
 // http://reactcommunity.org/react-modal/accessibility/
-if (process.env.NODE_ENV !== 'test') {						// To avoid errors when testing with Jest: https://github.com/reactjs/react-modal/issues/632
-	Modal.setAppElement('#app')
-}
+Modal.setAppElement('#app')
 
 const ConfirmationModal = props => (
 	<Modal
