@@ -12,11 +12,15 @@
 	background: fade-out($color: white, $amount: .15);
 	border-radius: 3px;
 	text-align: center;
-	width: 28rem;
+	width: $medium-box;
 	padding: $l-size $m-size;
 }
 
 .box-layout__title {
 	margin: 0 0 $m-size 0;
 	line-height: 1;
+}
+
+.box-layout__box--large {
+	width: $large-box
 }

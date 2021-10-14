@@ -26,6 +26,10 @@ button:disabled {
 	cursor: default;
 }
 
-.is-active {
-	font-weight: bold;
+// .is-active {					// Was used when initially creating the app and the NavBar
+// 	font-weight: bold;
+// }
+
+hr {
+	margin: $m-size;
 }

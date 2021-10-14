@@ -22,21 +22,29 @@ export const startGithubLogin = () => {
 	// Return a function as per Redux-Thunk spec...
 	return () => {
 		// ... which returns the Promise to continue the Promise chain, so things can happen after login in app.js
-		// return firebase.auth().signInWithPopup(githubAuthProvider);			// This works even if they have a Google login since we've disabled "one account per email address"
-		// If it was enabled (the default) then this flow would catch that error:
-		return firebase.auth()
-			.signInWithPopup(githubAuthProvider)
-			.catch((err) => {
-				console.log('Some kind of login error, maybe you already have an account with this email?');		// https://firebase.google.com/docs/auth/web/github-auth?authuser=0#expandable-1
-				console.log(err);			// err.code = 'auth/account-exists-with-different-credential'; err.message and err.email are the useful properties
-			});
+		return firebase.auth().signInWithPopup(githubAuthProvider);			// This works even if they have a Google login since we've disabled "one account per email address" (https://firebase.google.com/docs/auth/web/github-auth?authuser=0#expandable-1)
+		// If it was enabled (the default) then would need a .catch() on whatever dispatch()'d this. A .then() grab additional info, but app.js subscribes onAuthStateChanged so know as soon as Auth happens
+		// Essentially: dispatch(startGithubLog()).catch( err => handle_error_here ) and dispatch/do something else. Async/Await doesn't work well in React Components.
 	};
+}
+
+// This creates an email+pass login, AND if it succeeds also authenticates them - Email Signup
+export const startEmailSignup = (email, password) => {
+	return () => {
+		return firebase.auth().createUserWithEmailAndPassword(email, password);
+	}
+}
+
+// This just logs them in with email+pass
+export const startEmailLogin = (email, password) => {
+	return () => {
+		return firebase.auth().signInWithEmailAndPassword(email, password);
+	}
 }
 
 export const logout = () => ({
 	type: 'LOGOUT'
 })
-
 
 // The startLogout() action logs out any provider - and the end-result (being logged out) is caught in 
 // app.js via firebase.auth().onAuthStateChanged() which eventually dispatches logout()

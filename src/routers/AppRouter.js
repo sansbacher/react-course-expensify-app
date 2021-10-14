@@ -6,7 +6,8 @@ import AddExpensePage from '../components/AddExpensePage'
 import EditExpensePage from '../components/EditExpensePage'
 import NotFoundPage from '../components/NotFoundPage'
 import LoginPage from '../components/LoginPage'
-import PrivateRoute from './PrivateRoute'
+import EmailSignupPage from '../components/EmailSignupPage'
+import PrivateRoute from './PrivateRoute'						// Our custom Route wrappers
 import PublicRoute from './PublicRoute'
 
 // This is our own Browser History object that we can use elsewhere, not just in routed Components
@@ -18,7 +19,8 @@ const AppRouter = () => (
 	<Router history={history} >	{/* <Router> lets us specify our own custom history object, which can be used elsewhere (not just routed Components) */}
 		<div>	{/* Router expects only 1 child, so wrap in a DIV */}
 			<Switch>	{/* Switch allows only ONE Route to match, then stops */}
-				<PublicRoute path="/" component={LoginPage} exact={true} />	{/* Without exact '/' would match all routes */}
+				<PublicRoute path="/" component={LoginPage} exact={true} />			{/* Without exact '/' would match all routes */}
+				<PublicRoute path="/signup" component={EmailSignupPage} />
 				<PrivateRoute path="/dashboard" component={ExpenseDashboardPage} />		{/* Only available if logged in */}
 				<PrivateRoute path="/create" component={AddExpensePage} />
 				<PrivateRoute path="/edit/:id" component={EditExpensePage} />		{/* ReactRouter will pass props to all components of Routes */}

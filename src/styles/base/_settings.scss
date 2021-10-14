@@ -1,15 +1,21 @@
 // Colours
-$dark-grey: #333333;
 $grey: #666;
+$medium-grey: #484848;
+$dark-grey: #333333;
+$off-white: #f7f7f7;
 $blue: #1c88bf;
 $dark-blue: #364051;
-$off-white: #f7f7f7;
 $red: #bf291c;
 $orange: #bf7b1c;
 
 // Font Size
 $font-size-small: 1.4rem;
 $font-size-large: 1.8rem;
+
+// "Box" and Modal size
+$small-box: 28rem;
+$medium-box: 45rem;					// Not the same size as the $desktop-breakpoint, this is 450px
+$large-box: 60rem;
 
 // Spacing
 $s-size: 1.2rem;					// = 12px with our font-size: 62.5%; trick in _base.scss

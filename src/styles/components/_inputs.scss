@@ -15,3 +15,8 @@
 	@extend .text-input;
 }
 
+.input--grey-focus:focus {				// Override the focus ring to be less stark (not black)
+	outline: none !important;
+	border: 2px solid $medium-grey;
+	border-radius: 2px;
+}
