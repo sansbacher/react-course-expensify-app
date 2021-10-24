@@ -10,3 +10,45 @@
 	margin: 0 0 $m-size 0;
 	font-style: italic;
 }
+
+.form__progress-bar {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+	width: 100%;
+	height: 5px;
+	background-color: grey;
+}
+
+// Setting the colours of PROGRESS bars doesn't appear to be easy/standard across browsers. Using .form__progress-bar--red will work with the ::pseudo-classes in all browsers
+.form__progress-bar--red {
+	color: red;
+}
+.form__progress-bar--red::-webkit-progress-value {				// These are added implicitly as needed for Chrome/Webkit and Firefox browsers
+	background-color: red;
+}
+.form__progress-bar--red::-moz-progress-bar {
+	background-color: red;
+}
+
+.form__progress-bar--orange {
+	color: orange;
+}
+.form__progress-bar--orange::-webkit-progress-value {
+	background-color: orange;
+}
+.form__progress-bar--orange::-moz-progress-bar {
+	background-color: orange;
+}
+
+.form__progress-bar--green {
+	color: green;
+}
+.form__progress-bar--green::-webkit-progress-value {
+	background-color: green;
+}
+.form__progress-bar--green::-moz-progress-bar {
+	background-color: green;
+}
+

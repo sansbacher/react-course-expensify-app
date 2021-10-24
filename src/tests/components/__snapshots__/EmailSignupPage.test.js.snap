@@ -10,24 +10,12 @@ exports[`should render LoginPage correctly 1`] = `
     <h1
       className="box-layout__title"
     >
-      Expensify
+      Signup for Expensify!
     </h1>
     <p>
-      It's time to get your expenses under control
+      Enter your email address and pick a strong password
     </p>
     <div>
-      <button
-        className="button input--grey-focus"
-        onClick={[Function]}
-      >
-        Login with Google
-      </button>
-      <button
-        className="button button--github input--grey-focus"
-        onClick={[Function]}
-      >
-        Login with GitHub
-      </button>
       <hr />
       <form
         className="form"
@@ -42,27 +30,39 @@ exports[`should render LoginPage correctly 1`] = `
           value=""
         />
         <input
-          className="text-input input--grey-focus"
+          className="text-input input--grey-focus text-input--no-bottom-margin"
           onChange={[Function]}
           placeholder="Password"
           type="password"
           value=""
         />
+        <progress
+          className="form__progress-bar form__progress-bar--red"
+          max="5"
+          value={0}
+        />
+        <input
+          className="text-input input--grey-focus"
+          onChange={[Function]}
+          placeholder="Confirm password"
+          type="password"
+          value=""
+        />
         <div>
           <button
-            className="button button--email input--grey-focus"
+            className="button input--grey-focus"
           >
-            Login with Email
+            Sign Up
           </button>
         </div>
       </form>
       <p>
-        Don't have an account? 
+        Already have an Account? 
         <Link
           className="input--grey-focus"
-          to="/signup"
+          to="/"
         >
-          Sign up!
+          Log in!
         </Link>
       </p>
     </div>

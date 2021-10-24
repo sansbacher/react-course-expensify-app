@@ -11,9 +11,10 @@ test('should render LoginPage correctly', () => {
 })
 
 test('should call startLogin on Google Login button click', () => {
-	const startLoginSpy = jest.fn()												// Create a fake function that we can pass to Components and test if it was called
-	const wrapper = shallow(<LoginPage startGoogleLogin={startLoginSpy} />)		// Pass in props of a fake expense and the fake callback function
-	wrapper.find('button').at(0).simulate('click')								// Find the first button, which is the Google Login one
+	// const startLoginSpy = jest.fn()												// Create a fake function that we can pass to Components and test if it was called
+	const handleGoogleLogin = jest.fn(() => Promise.resolve())						// Our function now calls startLogin() with .catch() so we need to return a Promise so .catch() isn't called
+	const wrapper = shallow(<LoginPage startGoogleLogin={handleGoogleLogin} />)		// Pass in props of a fake expense and the fake callback function
+	wrapper.find('button').at(0).simulate('click')									// Find the first button, which is the Google Login one
 	// "spy" on our fake function to see if it was called correctly
-	expect(startLoginSpy).toHaveBeenCalled()									// See if it was called
+	expect(handleGoogleLogin).toHaveBeenCalled()									// See if it was called
 })

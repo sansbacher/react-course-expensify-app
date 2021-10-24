@@ -1,9 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux'
-
 import {startGoogleLogin, startGithubLogin, startEmailLogin} from '../actions/auth'
-
 
 export class LoginPage extends React.Component {
 	// Local state for this form
@@ -47,7 +45,7 @@ export class LoginPage extends React.Component {
 	render() {
 		return (
 			<div className="box-layout">
-				<div className="box-layout__box box-layout__box--focus">
+				<div className="box-layout__box">
 					<h1 className="box-layout__title">Expensify</h1>
 					<p>It's time to get your expenses under control</p>
 					<div>

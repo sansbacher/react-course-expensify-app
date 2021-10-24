@@ -53,7 +53,7 @@ firebase.auth().onAuthStateChanged((user) => {
 		// Render the app and redirect to main/login page if the user is logged out (so they can log in again)
 		store.dispatch(logout())
 		renderApp()
-		// history.push('/signup')				// !! For testing !!
-		history.push('/')
+		history.push('/signup')				// !! For testing !!
+		// history.push('/')
 	}
 })

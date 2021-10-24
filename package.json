@@ -5,7 +5,7 @@
   "license": "MIT",
   "engines": {
     "node": "14.x",
-    "yarn": "1.x"
+    "npm": "6.x"
   },
   "scripts": {
     "start": "node server/server.js",
@@ -15,7 +15,7 @@
     "test": "cross-env NODE_ENV=test jest --runInBand --config=jest.config.json",
     "test-watch": "cross-env NODE_ENV=test jest --watchAll --runInBand --config=jest.config.json",
     "test-changes": "cross-env NODE_ENV=test jest --watch --runInBand --config=jest.config.json",
-    "heroku-postbuild": "yarn run build:prod"
+    "heroku-postbuild": "npm run build:prod"
   },
   "dependencies": {
     "@babel/cli": "^7.13.10",
