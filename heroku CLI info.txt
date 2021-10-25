@@ -1,0 +1,80 @@
+** Heroku deployment (after Git is set up and working, and SSH is configured, etc)
+
+Install Heroku CLI from: https://devcenter.heroku.com/articles/heroku-cli
+
+# Update with:
+heroku update
+# check ver:
+heroku --version
+
+# * Heroku setup (if not already done):
+
+# Login:
+heroku Login
+# Check with
+heroku auth:whoami
+
+# Finds SSH keys  (ony needed once)
+heroku keys:add
+# View SSH keys:
+heroku keys
+
+# Create an app, run in the FOLDER/DIR root of your app (ie. your repo), as it adds a new Git Remote to the repo.
+heroku create name-of-app
+#   Name must be globally unique, eg: sansbacher-some-app
+
+#   Will return a Public URL and a Repo that can be added to Git and pushed to (generally it already adds it to an existing local repo as 'heroku')
+# Verify with
+git remote -v
+
+NOTE: you need to ensure you're using process.env.PORT for the Express port, and package.json needs to have a valid "start" script that will work from Linux, eg:
+"start": "node src/index.js"
+
+# Can Specify Heroku Node/NPM/Yarn versions in package.json as per: https://devcenter.heroku.com/articles/nodejs-support#node-js-runtimes
+{
+  "name": "myapp",
+  "description": "a really cool app",
+  "version": "1.0.0",
+  "engines": {
+    "node": "14.x",		// Use Major.x to get minor updates
+    "npm": "6.x",		// OR:
+    "yarn": "1.x"		// Yarn is used if yarn.lock is present in the repo
+  }
+}
+
+# Note: As of about 2018, Heroku will install ALL dependencies (regular and dev), build the app, and then purge all dev dependencies.
+# You only need dependencies for the SERVER component (eg. Express and any modules used by Express) - React, webpack, babel, etc are only needed during dev,
+# And one the React App is built they're not needed so can all be dev-dependencies.
+
+# Can also set pre/post build scripts that will run before/after Heroku has run npm install (or yarn install), such as:
+"heroku-postbuild": "yarn run build:prod"
+# This has Heroku using yarn to run the "build:prod" command/script, which must exist itself, like:
+"build:prod": "webpack --mode production",
+# This assumes yarn/npm install will install webpack and all the required files.
+# Now the public/build.* and styles.* files can be added to git-ignore as Heroku will build them anew.
+
+# To start the build process and install/push to Heroku use:
+git push heroku main
+# When it's finished, open a browser to the app with:
+heroku open
+
+# SET up Production environment variables:
+heroku config:set key=value
+#   Can set multuple, as in heroku config:set key=value key2=value2
+# VIEW Prod env variables:
+heroku config
+# DELETE Prod dev vars:
+heroku config:unset key
+# NOTE: If the value has & in it, and using PowerShell will need to wrap each & in "double quotes" and the whole value in 'single quotes', so it becomes:
+#   heroku config:set key='someLongValue?which=Has"&"w=anAmpersandInIt'
+# Otherwise you will get an error like: 'w' is not recognized as an internal or external command
+# Or you can try:   [if you specify an array of values, PowerShell will automatically expand them into separate parameters]
+#   & 'heroku' @('config:set', 'SECRET_KEY=eown6-"&"dnr9el8ert7-%3mu_"&"37$3hp!9c6x!^krjr4!z*z"&"b9')
+
+# To see Heroku logs, including console.log("some info") use: 	(can add -n 200 to see more, stores up to 1500)
+heroku logs
+# To ONLY see the console.log (and some control messages) use:
+heroku logs --dyno=web
+# Or to see the tail of a particular Heroku app: (or --tail)
+heroku logs -t --app your-app-name
+# Could also consider: https://elements.heroku.com/addons/papertrail
